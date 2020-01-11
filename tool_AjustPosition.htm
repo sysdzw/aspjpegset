@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="stylesheet" href="//at.alicdn.com/t/font_626784_0j006ef09vff.css" />
+<style type="text/css">
+*{margin:0px; padding:0px;}
+input[type="text"]{width:80px; height:25px;padding:3px;margin:3px;font-size:15px;}
+input[type="button"]{width:70px; height:50px; font-size:20px;}
+#down{margin-bottom:10px;}
+body{text-align:center;}
+#content{width:500px;margin:10px; backgrond:#eee; color:red; }
+</style>
+<script src="https://cdn.staticfile.org/jquery/1.11.2/jquery.min.js"></script>
+<title>证书调整位置</title>
+</head>
+<body>
+<input type="text" id="content" value="测试测试测试了啊"/><br>
+<input type="text" id="X" value="200"/> <input type="text" id="Y" value="200"/>　字号：<input type="text" id="size" value="30"/>　步长：<input type="text" id="pad" value="10"/>　<span id="showXY">0 , 0</span><br><br>
+<input type="button" id="up" value="↑"/><br>
+<input type="button" id="left" value="←"/><input type="button" id="right" value="→"/><br>
+<input type="button" id="down" value="↓"/><br>
+<img id="img" src="" alt="" />
+
+</body>
+<script type="text/javascript">
+$("#left").click(function(){
+	$("#X").val(parseInt($("#X").val()) - parseInt($("#pad").val()));
+	flushImg();
+});
+
+$("#right").click(function(){
+	$("#X").val(parseInt($("#X").val()) + parseInt($("#pad").val()));
+	flushImg();
+});
+
+$("#up").click(function(){
+	$("#Y").val(parseInt($("#Y").val()) - parseInt($("#pad").val()));
+	flushImg();
+});
+
+$("#down").click(function(){
+	$("#Y").val(parseInt($("#Y").val()) + parseInt($("#pad").val()));
+	flushImg();
+});
+
+function flushImg(){
+	$("#showXY").html($("#X").val() + " , " + $("#Y").val());
+	var url = "json_ajustPos.asp?key=a0cbc5a7&callback=?";
+	var data = { x: $("#X").val(), y:$("#Y").val(), content:$("#content").val(), size:$("#size").val()};
+	$.getJSON(url, data, function (backdata) {
+		$("#img").attr("src",backdata.result);
+	});
+}
+
+$("#img").mousemove(function(e){
+	var x=e.pageX-$(this).offset().left;
+	var y=e.pageY-$(this).offset().top;
+	$("#showXY").html( x + " , " + y);
+});
+
+$("#img").click(function(e){
+	var x=e.pageX-$(this).offset().left;
+	var y=e.pageY-$(this).offset().top;
+	
+	$("#X").val(x);
+	$("#Y").val(y);
+	
+	flushImg();
+});
+
+flushImg();
+</script>
+</html>

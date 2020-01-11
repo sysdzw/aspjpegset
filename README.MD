@@ -12,3 +12,5 @@ aspjpeg组件一般大家用来在图片上打水印写文字，比如空的证�
 
 sysdzw
 联系QQ：171977759
+
+![image](https://raw.githubusercontent.com/sysdzw/aspjpegset/master/%E6%B5%8B%E8%AF%95%E5%8A%A8%E7%94%BB.gif)
